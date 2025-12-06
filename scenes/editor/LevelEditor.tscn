@@ -1,0 +1,193 @@
+[gd_scene load_steps=6 format=3 uid="uid://c7xk8m2l5q5vh"]
+
+[ext_resource type="Script" path="res://scripts/editor/LevelEditor.gd" id="1_editor"]
+[ext_resource type="Texture2D" uid="uid://eg8k3r5xq2m4p" path="res://assets/sprites/tiles/tileset.png" id="2_tileset"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_main"]
+texture = ExtResource("2_tileset")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_editor"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 6
+sources/0 = SubResource("TileSetAtlasSource_main")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toolbar"]
+bg_color = Color(0.05, 0.02, 0.1, 0.95)
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_palette"]
+bg_color = Color(0.05, 0.02, 0.1, 0.95)
+border_width_right = 2
+border_color = Color(0.6, 0.2, 1, 0.8)
+
+[node name="LevelEditor" type="Node2D"]
+script = ExtResource("1_editor")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1, 1)
+position_smoothing_enabled = true
+position_smoothing_speed = 12.0
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_editor")
+format = 2
+
+[node name="GridOverlay" type="Node2D" parent="."]
+
+[node name="CursorPreview" type="Sprite2D" parent="."]
+modulate = Color(0, 1, 1, 0.5)
+z_index = 100
+
+[node name="PlayerSpawnMarker" type="Sprite2D" parent="."]
+modulate = Color(0.2, 1, 0.5, 1)
+position = Vector2(64, 400)
+z_index = 99
+
+[node name="GoalMarker" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(3000, 400)
+z_index = 99
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Toolbar" type="Panel" parent="UILayer"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_toolbar")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/Toolbar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="EditorTitle" type="Label" parent="UILayer/Toolbar/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "LEVEL EDITOR"
+
+[node name="Spacer1" type="Control" parent="UILayer/Toolbar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModeButtons" type="HBoxContainer" parent="UILayer/Toolbar/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Spacer2" type="Control" parent="UILayer/Toolbar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SaveButton" type="Button" parent="UILayer/Toolbar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "SAVE"
+
+[node name="LoadButton" type="Button" parent="UILayer/Toolbar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "LOAD"
+
+[node name="TestButton" type="Button" parent="UILayer/Toolbar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "TEST [F5]"
+
+[node name="MenuButton" type="Button" parent="UILayer/Toolbar/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "MENU"
+
+[node name="TilePalette" type="VBoxContainer" parent="UILayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 70.0
+offset_right = 200.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_palette")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UILayer/TilePalette"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PropertiesPanel" type="VBoxContainer" parent="UILayer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = 70.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="PropertiesLabel" type="Label" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "LEVEL PROPERTIES"
+
+[node name="NameLabel" type="Label" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Level Name:"
+
+[node name="LevelNameInput" type="LineEdit" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+text = "Untitled Level"
+
+[node name="AuthorLabel" type="Label" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Author:"
+
+[node name="AuthorInput" type="LineEdit" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+text = "Player"
+
+[node name="HelpLabel" type="Label" parent="UILayer/PropertiesPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.5, 0.6, 1)
+theme_override_font_sizes/font_size = 12
+text = "Controls:
+LMB - Place
+RMB - Erase
+MMB - Pan
+Scroll - Zoom
+WASD - Move camera
+F5 - Test level
+Ctrl+S - Save"

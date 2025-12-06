@@ -1,0 +1,191 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5xk8m2l5q3vh"]
+
+[ext_resource type="Script" path="res://scripts/ui/CustomizationMenu.gd" id="1_customize"]
+[ext_resource type="Texture2D" uid="uid://bg8k3r5xq2m1p" path="res://assets/sprites/backgrounds/city_far.png" id="2_background"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.08, 0.04, 0.15, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.2, 1, 0.8)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_trail"]
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_min = 30.0
+initial_velocity_max = 60.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_max = 1.5
+color = Color(0, 1, 1, 0.8)
+
+[node name="CustomizationMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_customize")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="TitleLabel" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 42
+text = "CUSTOMIZE"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 30
+
+[node name="SkinPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/SkinPanel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/SkinPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "SKINS"
+horizontal_alignment = 1
+
+[node name="SkinGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/SkinPanel"]
+layout_mode = 2
+columns = 3
+
+[node name="ColorPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/ColorPanel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/ColorPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "COLORS"
+horizontal_alignment = 1
+
+[node name="ColorGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/ColorPanel"]
+layout_mode = 2
+columns = 4
+
+[node name="TrailPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/TrailPanel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/TrailPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.2, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "TRAILS"
+horizontal_alignment = 1
+
+[node name="TrailGrid" type="GridContainer" parent="MarginContainer/HBoxContainer/TrailPanel"]
+layout_mode = 2
+columns = 3
+
+[node name="PreviewPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/HBoxContainer/PreviewPanel"]
+layout_mode = 2
+alignment = 1
+
+[node name="PreviewLabel" type="Label" parent="MarginContainer/HBoxContainer/PreviewPanel/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "PREVIEW"
+horizontal_alignment = 1
+
+[node name="PreviewContainer" type="CenterContainer" parent="MarginContainer/HBoxContainer/PreviewPanel/VBox"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="PreviewSprite" type="AnimatedSprite2D" parent="MarginContainer/HBoxContainer/PreviewPanel/VBox/PreviewContainer"]
+scale = Vector2(4, 4)
+
+[node name="PreviewTrail" type="GPUParticles2D" parent="MarginContainer/HBoxContainer/PreviewPanel/VBox/PreviewContainer"]
+emitting = false
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_trail")
+lifetime = 0.5
+
+[node name="ItemNameLabel" type="Label" parent="MarginContainer/HBoxContainer/PreviewPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Default"
+horizontal_alignment = 1
+
+[node name="ItemDescLabel" type="Label" parent="MarginContainer/HBoxContainer/PreviewPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 14
+text = "The classic runner"
+horizontal_alignment = 1
+
+[node name="UnlockLabel" type="Label" parent="MarginContainer/HBoxContainer/PreviewPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.2, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 14
+text = "UNLOCKED"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "< BACK"
