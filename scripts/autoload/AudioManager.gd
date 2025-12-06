@@ -121,25 +121,34 @@ func _load_audio_files() -> void:
 	var sfx_path = "res://assets/audio/sfx/"
 	var music_path = "res://assets/audio/music/"
 
-	# Try to load SFX
+	# Try to load SFX (check .wav first, then .ogg)
 	for key in sfx_library.keys():
 		var path = sfx_path + key + ".wav"
 		if ResourceLoader.exists(path):
 			sfx_library[key] = load(path)
+			print("Loaded SFX: ", key)
 		else:
 			path = sfx_path + key + ".ogg"
 			if ResourceLoader.exists(path):
 				sfx_library[key] = load(path)
+				print("Loaded SFX: ", key)
 
-	# Try to load music
+	# Try to load music (check .wav first, then .ogg, then .mp3)
 	for key in music_library.keys():
-		var path = music_path + key + ".ogg"
+		var path = music_path + key + ".wav"
 		if ResourceLoader.exists(path):
 			music_library[key] = load(path)
+			print("Loaded Music: ", key)
 		else:
-			path = music_path + key + ".mp3"
+			path = music_path + key + ".ogg"
 			if ResourceLoader.exists(path):
 				music_library[key] = load(path)
+				print("Loaded Music: ", key)
+			else:
+				path = music_path + key + ".mp3"
+				if ResourceLoader.exists(path):
+					music_library[key] = load(path)
+					print("Loaded Music: ", key)
 
 func _process(delta: float) -> void:
 	# Handle music crossfade

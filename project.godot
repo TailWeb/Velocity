@@ -109,6 +109,10 @@ editor_save={
 2d_physics/layer_6="triggers"
 2d_physics/layer_7="ghost"
 
+[audio]
+
+buses/default_bus_layout="res://default_bus_layout.tres"
+
 [physics]
 
 2d/default_gravity=1800.0
