@@ -1,19 +1,27 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4xk8m2l5q2vh"]
+[gd_scene load_steps=5 format=3 uid="uid://c4xk8m2l5q2vh"]
 
 [ext_resource type="Script" path="res://scripts/ui/LevelSelect.gd" id="1_levelselect"]
 [ext_resource type="Texture2D" uid="uid://bg8k3r5xq2m1p" path="res://assets/sprites/backgrounds/city_far.png" id="2_background"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.05, 0.02, 0.1, 0.95)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab"]
+bg_color = Color(0.08, 0.04, 0.15, 0.95)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 1, 0.5)
+border_width_bottom = 0
+border_color = Color(0.6, 0.2, 1, 0.8)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tab_selected"]
+bg_color = Color(0.12, 0.06, 0.22, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 0
+border_color = Color(0, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -35,6 +43,15 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
+[node name="ColorOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.01, 0.05, 0.6)
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -42,53 +59,67 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 30
+theme_override_constants/separation = 20
 
-[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="HeaderContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HeaderContainer"]
+custom_minimum_size = Vector2(120, 40)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
+theme_override_colors/font_hover_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "< BACK"
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer/HeaderContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 1, 0.4)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 3
 theme_override_font_sizes/font_size = 48
 text = "SELECT LEVEL"
 horizontal_alignment = 1
 
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer/HeaderContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
 [node name="ChapterTabs" type="TabContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_styles/tab_unselected = SubResource("StyleBoxFlat_tab")
+theme_override_styles/tab_selected = SubResource("StyleBoxFlat_tab_selected")
+tab_alignment = 1
 
-[node name="StatsPanel" type="HBoxContainer" parent="MarginContainer"]
+[node name="StatsPanel" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 8
-theme_override_constants/separation = 40
+alignment = 1
+theme_override_constants/separation = 60
 
-[node name="TotalStarsLabel" type="Label" parent="MarginContainer/StatsPanel"]
+[node name="TotalStarsLabel" type="Label" parent="MarginContainer/VBoxContainer/StatsPanel"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.2, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 18
 text = "STARS: 0"
 
-[node name="TotalMedalsLabel" type="Label" parent="MarginContainer/StatsPanel"]
+[node name="TotalMedalsLabel" type="Label" parent="MarginContainer/VBoxContainer/StatsPanel"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.8, 0.9, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.9, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 18
 text = "MEDALS: 0/0/0/0"
 
-[node name="PlaytimeLabel" type="Label" parent="MarginContainer/StatsPanel"]
+[node name="PlaytimeLabel" type="Label" parent="MarginContainer/VBoxContainer/StatsPanel"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.6, 0.6, 0.7, 1)
-theme_override_font_sizes/font_size = 16
-text = "PLAYTIME: 00:00"
-
-[node name="BackButton" type="Button" parent="MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 18
-text = "< BACK"
+text = "PLAYTIME: 00:00"
